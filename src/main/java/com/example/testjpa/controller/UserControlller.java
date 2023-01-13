@@ -2,6 +2,7 @@ package com.example.testjpa.controller;
 
 import com.example.testjpa.model.User;
 import com.example.testjpa.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,12 @@ public class UserControlller {
     @DeleteMapping
     public ResponseEntity<String> delete(@RequestParam Long id) {
         userService.delete(id);
+        return ResponseEntity.ok("SUCCESS");
+    }
+
+    @GetMapping("/modify")
+    public ResponseEntity<String> modify(@RequestParam(name = "id") Long id) throws JsonProcessingException {
+        userService.modify(id);
         return ResponseEntity.ok("SUCCESS");
     }
 

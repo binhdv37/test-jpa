@@ -36,4 +36,7 @@ public class User {
 
     @Column(name = "address")
     private String address;
+
+    @Column(name = "status")
+    private Integer status;
 }
