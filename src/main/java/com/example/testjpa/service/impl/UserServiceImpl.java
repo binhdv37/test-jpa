@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
             User current = validateExistAndReturn(user.getId());
             current.setFirstName(user.getFirstName());
             current.setLastName(user.getFirstName());
-            current.setFullName(user.getFirstName());
+            current.setEmail(user.getEmail());
             current.setPhoneNumber(user.getPhoneNumber());
             current.setAge(user.getAge());
             current.setGender(user.getGender());
@@ -61,6 +61,8 @@ public class UserServiceImpl implements UserService {
         validateExistAndReturn(id);
 
         userRespository.updateStatus(id, 2);
+
+        userRespository.updateStatus(id, 3);
 
         log.info("Is in a transaction: {}", TransactionSynchronizationManager.isActualTransactionActive());
 
