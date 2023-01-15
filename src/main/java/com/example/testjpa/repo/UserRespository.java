@@ -13,4 +13,8 @@ public interface UserRespository extends JpaRepository<User, Long> {
     @Query(value = "update User set status = ?2 where id = ?1")
     void updateStatus(Long id, Integer status);
 
+    @Modifying
+    @Query(value = "delete from User where id = ?1")
+    void deleteCustom(Long id);
+
 }

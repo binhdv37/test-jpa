@@ -16,26 +16,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "first_name")
-    private String firstName;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "last_name")
-    private String lastName;
-
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
-
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
-    @Column(name = "gender")
-    private Integer gender;
-
-    @Column(name = "age")
-    private Integer age;
-
-    @Column(name = "address")
-    private String address;
 
     @Column(name = "status")
     private Integer status;

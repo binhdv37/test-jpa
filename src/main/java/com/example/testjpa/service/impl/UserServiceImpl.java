@@ -2,6 +2,7 @@ package com.example.testjpa.service.impl;
 
 import com.example.testjpa.model.User;
 import com.example.testjpa.repo.UserRespository;
+import com.example.testjpa.service.TestService;
 import com.example.testjpa.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,6 +22,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRespository userRespository;
 
+    @Autowired
+    TestService testService;
 
     @Override
     public User validateExistAndReturn(Long id) {
@@ -33,19 +36,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user) {
-        if (user.getId() == null) {
-            userRespository.save(user);
-        } else {
-            User current = validateExistAndReturn(user.getId());
-            current.setFirstName(user.getFirstName());
-            current.setLastName(user.getFirstName());
-            current.setEmail(user.getEmail());
-            current.setPhoneNumber(user.getPhoneNumber());
-            current.setAge(user.getAge());
-            current.setGender(user.getGender());
-            current.setAddress(user.getAddress());
-            userRespository.save(current);
-        }
+        User user1 = new User();
+        user1.setId(1L);
+        user1.setEmail("aaa");
+        user1.setName("asd");
+        userRespository.save(user1);
+
+//        if (user.getId() == null) {
+//            userRespository.save(user);
+//        } else {
+//            User current = validateExistAndReturn(user.getId());
+//            current.setEmail(user.getEmail());
+//            current.setName(user.getName());
+//            current.setStatus(user.getStatus());
+//            userRespository.save(current);
+//        }
     }
 
     @Override
@@ -56,21 +61,30 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void modify(Long id) throws JsonProcessingException {
-        log.info("Is in a transaction: {}", TransactionSynchronizationManager.isActualTransactionActive());
 
-        validateExistAndReturn(id);
+        System.out.println("Enter modify: " + TransactionSynchronizationManager.isActualTransactionActive());
+        System.out.println("Transaction name: " + TransactionSynchronizationManager.getCurrentTransactionName());
 
-        userRespository.updateStatus(id, 2);
+        for (int i = 1; i < 10; i++) {
+            testService.test((long)i);
+        }
 
-        userRespository.updateStatus(id, 3);
+        System.out.println("End of transaction");
 
-        log.info("Is in a transaction: {}", TransactionSynchronizationManager.isActualTransactionActive());
 
-        User user = validateExistAndReturn(id);
-
-//        System.out.println(1/0);
-
-        log.info("User: {}", objectMapper.writeValueAsString(user));
+//        User user = validateExistAndReturn(id);
+//
+//        userRespository.deleteCustom(id);
+//
+//        User newUser = new User();
+//        newUser.setId(id);
+//        newUser.setEmail("binhdz@gmail.com");
+//        newUser.setName("aasd");
+//        newUser.setStatus(0);
+//
+//        User saved = userRespository.save(newUser);
+//
+//        log.info("newUserSaved: {}", objectMapper.writeValueAsString(saved));
 
     }
 
