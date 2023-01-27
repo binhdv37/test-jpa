@@ -36,21 +36,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user) {
-        User user1 = new User();
-        user1.setId(1L);
-        user1.setEmail("aaa");
-        user1.setName("asd");
-        userRespository.save(user1);
-
-//        if (user.getId() == null) {
-//            userRespository.save(user);
-//        } else {
-//            User current = validateExistAndReturn(user.getId());
-//            current.setEmail(user.getEmail());
-//            current.setName(user.getName());
-//            current.setStatus(user.getStatus());
-//            userRespository.save(current);
-//        }
+        if (user.getId() == null) {
+            userRespository.save(user);
+        } else {
+            User current = validateExistAndReturn(user.getId());
+            current.setEmail(user.getEmail());
+            current.setName(user.getName());
+            current.setStatus(user.getStatus());
+            userRespository.save(current);
+        }
     }
 
     @Override
