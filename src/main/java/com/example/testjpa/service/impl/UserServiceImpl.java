@@ -27,10 +27,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User validateExistAndReturn(Long id) {
+//        userRespository.preExecute();
         User user = userRespository.findById(id).orElse(null);
+//        User user = userRespository.findByIdVer2(id);
         if (user == null) {
             throw new RuntimeException("User not found");
         }
+//        userRespository.postExecute();
         return user;
     }
 

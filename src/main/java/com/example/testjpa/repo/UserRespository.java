@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRespository extends JpaRepository<User, Long> {
 
+    @Query(value = "select u from User u where u.id = ?1")
+    User findByIdVer2(Long id);
+
     @Modifying(clearAutomatically = true)
     @Query(value = "update User set status = ?2 where id = ?1")
     void updateStatus(Long id, Integer status);
