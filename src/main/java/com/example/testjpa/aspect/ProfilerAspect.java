@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class ProfilerAspect {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Pointcut("execution(public * org.springframework.data.repository.Repository+.*(..))")
+    @Pointcut(value = "execution(public * com.example.testjpa.service.UserService+.*(..))")
     public void monitor() {}
 
     @Around("monitor()")
@@ -24,15 +24,14 @@ public class ProfilerAspect {
 
         try {
             output = pjp.proceed();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             logger.error("------- loi ------"); // ko bao gio di vao day ???
             throw e;
         } finally {
             logger.error("--- finaly ----");
+            long elapsedTime = System.currentTimeMillis() - start;
+            logger.warn(": Execution time: " + elapsedTime + " ms. ("+ elapsedTime/60000 + " minutes)");
         }
-
-        long elapsedTime = System.currentTimeMillis() - start;
-        logger.warn(": Execution time: " + elapsedTime + " ms. ("+ elapsedTime/60000 + " minutes)");
 
         return output;
     }
