@@ -1,6 +1,8 @@
 package com.example.testjpa.service.impl;
 
+import com.example.testjpa.model.Test;
 import com.example.testjpa.model.User;
+import com.example.testjpa.repo.TestRepository;
 import com.example.testjpa.repo.UserRespository;
 import com.example.testjpa.service.TestService;
 import com.example.testjpa.service.UserService;
@@ -23,7 +25,47 @@ public class UserServiceImpl implements UserService {
     private UserRespository userRespository;
 
     @Autowired
+    private TestRepository testRepository;
+
+    @Autowired
     TestService testService;
+
+    @Transactional
+    @Override
+    public void test(Long userId, Long id, String name) {
+        User user = validateExistAndReturn(userId);
+        user.setName("start name");
+
+        testRepository.testModify(id, name);
+
+        System.out.println(user.getName());
+
+        User user1 = validateExistAndReturn(userId);
+        System.out.println(user1.getName());
+
+//        User user1 = validateExistAndReturn(userId);
+
+//        System.out.println("ten dau: " + user.getName());
+//        System.out.println("ten: " + user1.getName());
+
+        return;
+
+//        Test test = testRepository.findById(id).orElse(null);
+//
+//        if (test != null) {
+//            test.setName("hahahaha");
+//
+//            testRepository.testModify(id, name);
+//
+//            String z = test.getName();
+//
+//            System.out.println(z);
+//
+//        }
+
+
+
+    }
 
     @Override
     public User validateExistAndReturn(Long id) {

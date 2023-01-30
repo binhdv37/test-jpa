@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface UserService {
 
+    void test(Long userId, Long id, String name);
+
     User validateExistAndReturn(Long id);
 
     void save(User user);

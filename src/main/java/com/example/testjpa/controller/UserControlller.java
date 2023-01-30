@@ -14,6 +14,16 @@ public class UserControlller {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/test")
+    public ResponseEntity<String> test(
+            @RequestParam(name = "userId") Long userId,
+            @RequestParam(name = "id") Long id,
+            @RequestParam(name = "name") String name
+    ) {
+        userService.test(userId, id, name);
+        return ResponseEntity.ok("OKEEE");
+    }
+
     @GetMapping
     public ResponseEntity<User> getById(@RequestParam(name = "id") Long id) {
         return ResponseEntity.ok(userService.validateExistAndReturn(id));
